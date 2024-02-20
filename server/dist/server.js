@@ -14,6 +14,7 @@ const insertData_1 = require("./lib/insertData");
 const auth_1 = __importDefault(require("./routes/auth"));
 const product_1 = __importDefault(require("./routes/product"));
 const user_1 = __importDefault(require("./routes/user"));
+const cart_1 = __importDefault(require("./routes/cart"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8080;
 app.use((0, cors_1.default)({
@@ -25,6 +26,7 @@ app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :resp
 app.use("/api/auth", auth_1.default);
 app.use("/api/product", product_1.default);
 app.use("/api/user", user_1.default);
+app.use("/api/cart", cart_1.default);
 app.listen(port, () => {
     console.log(`[server]: server is listening at http://localhost:${port}/`);
     (0, insertData_1.insertDummyData)();

@@ -13,6 +13,7 @@ const router = (0, express_1.Router)();
 //^ ==> get routes
 router.get("/get-all", [is_auth_1.default, is_user_1.default], product_1.getAllProductsHandler);
 router.get("/get-product/:productId", [is_auth_1.default, is_user_1.default], product_1.getProductHandler);
+router.get("/get-product-categories", [is_auth_1.default, is_user_1.default], product_1.getProductCategoriesHandler);
 //^ ==> post routes
 const productRouter = router;
 exports.default = productRouter;

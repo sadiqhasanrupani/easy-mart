@@ -283,6 +283,109 @@ export declare const user: import("drizzle-orm/mysql-core").MySqlTableWithColumn
     };
     dialect: "mysql";
 }>;
+export declare const cart: import("drizzle-orm/mysql-core").MySqlTableWithColumns<{
+    name: "carts";
+    schema: undefined;
+    columns: {
+        id: import("drizzle-orm/mysql-core").MySqlColumn<{
+            name: "id";
+            tableName: "carts";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: true;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        userId: import("drizzle-orm/mysql-core").MySqlColumn<{
+            name: "user_id";
+            tableName: "carts";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        productId: import("drizzle-orm/mysql-core").MySqlColumn<{
+            name: "product_id";
+            tableName: "carts";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        quantity: import("drizzle-orm/mysql-core").MySqlColumn<{
+            name: "quantity";
+            tableName: "carts";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        totalPrice: import("drizzle-orm/mysql-core").MySqlColumn<{
+            name: "total_price";
+            tableName: "carts";
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+        isCheck: import("drizzle-orm/mysql-core").MySqlColumn<{
+            name: "is_check";
+            tableName: "carts";
+            dataType: "boolean";
+            columnType: "MySqlBoolean";
+            data: boolean;
+            driverParam: number | boolean;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        createdAt: import("drizzle-orm/mysql-core").MySqlColumn<{
+            name: "created_at";
+            tableName: "carts";
+            dataType: "string";
+            columnType: "MySqlDateTimeString";
+            data: string;
+            driverParam: string | number;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        updatedAt: import("drizzle-orm/mysql-core").MySqlColumn<{
+            name: "updated_at";
+            tableName: "carts";
+            dataType: "string";
+            columnType: "MySqlDateTimeString";
+            data: string;
+            driverParam: string | number;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+    };
+    dialect: "mysql";
+}>;
 export declare const order: import("drizzle-orm/mysql-core").MySqlTableWithColumns<{
     name: "orders";
     schema: undefined;

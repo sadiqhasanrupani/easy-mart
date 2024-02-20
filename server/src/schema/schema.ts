@@ -1,4 +1,4 @@
-import { mysqlTable, int, varchar, datetime, date, json, longtext } from "drizzle-orm/mysql-core";
+import { mysqlTable, int, varchar, datetime, date, json, longtext, boolean } from "drizzle-orm/mysql-core";
 
 export const productCategory = mysqlTable("product_categories", {
   id: int("id", { unsigned: true }).notNull().primaryKey().autoincrement(),
@@ -29,6 +29,21 @@ export const user = mysqlTable("users", {
   password: varchar("password", { length: 191 }).notNull(),
   address: varchar("address", { length: 191 }).notNull(),
   phoneNumber: varchar("phone_number", { length: 191 }).notNull(),
+  createdAt: datetime("created_at", { mode: "string" }),
+  updatedAt: datetime("updated_at", { mode: "string" }),
+});
+
+export const cart = mysqlTable("carts", {
+  id: int("id", { unsigned: true }).notNull().primaryKey().autoincrement(),
+  userId: int("user_id", { unsigned: true })
+    .notNull()
+    .references(() => user.id),
+  productId: int("product_id", { unsigned: true })
+    .notNull()
+    .references(() => product.id),
+  quantity: int("quantity").notNull(),
+  totalPrice: longtext("total_price").notNull(),
+  isCheck: boolean("is_check"),
   createdAt: datetime("created_at", { mode: "string" }),
   updatedAt: datetime("updated_at", { mode: "string" }),
 });

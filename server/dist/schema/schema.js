@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.testCases = exports.payment = exports.oderItem = exports.order = exports.user = exports.product = exports.productCategory = void 0;
+exports.testCases = exports.payment = exports.oderItem = exports.order = exports.cart = exports.user = exports.product = exports.productCategory = void 0;
 const mysql_core_1 = require("drizzle-orm/mysql-core");
 exports.productCategory = (0, mysql_core_1.mysqlTable)("product_categories", {
     id: (0, mysql_core_1.int)("id", { unsigned: true }).notNull().primaryKey().autoincrement(),
@@ -29,6 +29,20 @@ exports.user = (0, mysql_core_1.mysqlTable)("users", {
     password: (0, mysql_core_1.varchar)("password", { length: 191 }).notNull(),
     address: (0, mysql_core_1.varchar)("address", { length: 191 }).notNull(),
     phoneNumber: (0, mysql_core_1.varchar)("phone_number", { length: 191 }).notNull(),
+    createdAt: (0, mysql_core_1.datetime)("created_at", { mode: "string" }),
+    updatedAt: (0, mysql_core_1.datetime)("updated_at", { mode: "string" }),
+});
+exports.cart = (0, mysql_core_1.mysqlTable)("carts", {
+    id: (0, mysql_core_1.int)("id", { unsigned: true }).notNull().primaryKey().autoincrement(),
+    userId: (0, mysql_core_1.int)("user_id", { unsigned: true })
+        .notNull()
+        .references(() => exports.user.id),
+    productId: (0, mysql_core_1.int)("product_id", { unsigned: true })
+        .notNull()
+        .references(() => exports.product.id),
+    quantity: (0, mysql_core_1.int)("quantity").notNull(),
+    totalPrice: (0, mysql_core_1.longtext)("total_price").notNull(),
+    isCheck: (0, mysql_core_1.boolean)("is_check"),
     createdAt: (0, mysql_core_1.datetime)("created_at", { mode: "string" }),
     updatedAt: (0, mysql_core_1.datetime)("updated_at", { mode: "string" }),
 });

@@ -17,6 +17,7 @@ async function getUser(req, res) {
             name: schema_1.user.userName,
             image: schema_1.user.img,
             email: schema_1.user.email,
+            address: schema_1.user.address,
         })
             .from(schema_1.user)
             .where((0, drizzle_orm_1.eq)(schema_1.user.id, userMiddleware.id));
