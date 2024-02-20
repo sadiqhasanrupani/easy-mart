@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { AppUseSelector } from "@/store";
 
 //^ http request
 import { getAllProductsHandler } from "@/http/get";
@@ -12,6 +13,8 @@ import Spinner from "@/components/ui-component/spinner/Spinner";
 import ProductsSection from "@/components/products-section/ProductsSection";
 
 export default function Products() {
+  const prodCategoryId = AppUseSelector((state) => state.product.prodCategoryId);
+
   const {
     data: allProductData,
     isLoading: allProductIsLoading,
@@ -19,8 +22,8 @@ export default function Products() {
     error: allProductError,
     refetch: allProductRefetch,
   } = useQuery<GetProductsRes, any>({
-    queryKey: ["get-all-product"],
-    queryFn: ({ signal }) => getAllProductsHandler({ signal }),
+    queryKey: ["get-all-products", prodCategoryId],
+    queryFn: ({ signal }) => getAllProductsHandler({ signal, prodCategoryId: prodCategoryId as number }),
     staleTime: Infinity,
   });
 

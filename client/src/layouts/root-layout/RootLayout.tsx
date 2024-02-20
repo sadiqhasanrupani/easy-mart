@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 //^ http
 import { verifyToken } from "@/http/get";
 import { getAuthToken } from "@/lib/is-auth";
+import Spinner from "@/components/ui-component/spinner/Spinner";
 
 export default function RootLayout() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function RootLayout() {
 
   const {
     data: _verifyTokenData,
-    isLoading: _verifyTokenIsLoading,
+    isLoading: verifyTokenIsLoading,
     isRefetching: _verifyTokenIsRefetching,
     isError: verifyTokenIsError,
     error: verifyTokenError,
@@ -47,7 +48,13 @@ export default function RootLayout() {
 
   return (
     <div>
-      <Outlet />
+      {verifyTokenIsLoading ? (
+        <div className="flex h-screen items-center justify-center">
+          <Spinner className="w-10 h-10 text-slate-500" />
+        </div>
+      ) : (
+        <Outlet />
+      )}
     </div>
   );
 }

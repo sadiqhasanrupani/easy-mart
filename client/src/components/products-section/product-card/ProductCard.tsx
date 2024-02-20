@@ -42,24 +42,24 @@ export default function ProductCard(props: ProductCard) {
                 <p>{"\u20B9" + indianPrice.format(price)}</p>
               </div>
               <p className="italic">{shortenString(props.product.description as string, 150)}</p>
-              <div className="flex gap-4 justify-end mt-4">
-                <Button type="button" onClick={() => navigate(`product-details/${props.product.id}`)} variant={"link"}>
-                  <motion.div
-                    initial={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
-                    animate={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
-                    whileHover={{ scale: 1, opacity: 0.8, gap: "0.9rem" }}
-                  >
-                    <p>View Details</p>
-                    <span>
-                      <ArrowUpFromDot className="rotate-90 w-4" />
-                    </span>
-                  </motion.div>
-                </Button>
-              </div>
             </div>
           </div>
-          <div>
-            <Badge className="cursor-default">{props.product.categoryNm}</Badge>
+          <div className="flex justify-between items-center">
+            <div>
+              <Badge className="cursor-default">{props.product.categoryNm}</Badge>
+            </div>
+            <Button type="button" onClick={() => navigate(`product-details/${props.product.id}`)} variant={"link"}>
+              <motion.div
+                initial={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
+                animate={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
+                whileHover={{ scale: 1, opacity: 0.8, gap: "0.9rem" }}
+              >
+                <p>View Details</p>
+                <span>
+                  <ArrowUpFromDot className="rotate-90 w-4" />
+                </span>
+              </motion.div>
+            </Button>
           </div>
         </div>
       </Card>

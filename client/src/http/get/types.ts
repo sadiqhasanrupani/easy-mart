@@ -5,6 +5,7 @@ export type GetUserRes = {
     name: string;
     image: string | null;
     email: string;
+    address: string;
   };
 };
 
@@ -36,4 +37,43 @@ export type ProductDetail = {
 
 export type GetProductDetailRes = {
   productDetail: ProductDetail;
+};
+
+export type ProductCategory = {
+  id: number;
+  name: string;
+};
+
+export type GetProductCategoriesRes = {
+  message: string;
+  productCategories: ProductCategory[];
+};
+
+export type GetCartProdDetailRes = {
+  message: string;
+  cartData:
+    | {
+        id: number;
+        quantity: number;
+      }
+    | undefined;
+};
+
+export type GetCartCountRes = {
+  message: string;
+  cartCount: number | undefined;
+};
+
+export type Cart = {
+  id: number;
+  prodName: string;
+  prodImg: string[] | null;
+  prodQty: number;
+  prodPrice: string;
+  prodTotalPrice: string;
+};
+
+export type GetCartDataRes = {
+  message: string;
+  carts: Cart[];
 };

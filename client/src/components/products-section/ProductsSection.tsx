@@ -12,10 +12,8 @@ type ProductsSectionProps = {
 };
 
 export default function ProductsSection(props: ProductsSectionProps) {
-  // const [products, setProducts] = useState<Products>(props.products);
-
   return (
-    <motion.div className="grid grid-cols-3 gap-8">
+    <motion.div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       {props.products.map((product, index) => {
         return (
           <React.Fragment key={index}>

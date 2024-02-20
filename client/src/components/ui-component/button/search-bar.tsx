@@ -6,7 +6,7 @@ import { Button, ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type SearchBarProps = {
-  searchPlaceHolder?: string;
+  searchPlaceHolder?: string | React.ReactNode;
 } & ButtonProps;
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
@@ -22,7 +22,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
         <span>
           <Search className="w-4" />
         </span>
-        <span>{props.searchPlaceHolder || "Search..."}</span>
+        <span className="w-full">{props.searchPlaceHolder || "Search..."}</span>
       </Button>
     </>
   );

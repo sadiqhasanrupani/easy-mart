@@ -15,6 +15,7 @@ import { LoginContext } from "@/http/post/types";
 //^shadcn-ui
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 //^ ui-component
 import TextField from "@/components/ui-component/input/TextField";
@@ -45,9 +46,12 @@ export default function LoginPage() {
     },
   });
 
-  const insertUserFormHandler = (_event: React.MouseEvent<HTMLButtonElement>) => {
-    formik.setFieldValue("emailId", "johndoe@gmail.com", false);
-    formik.setFieldValue("password", "123456", false);
+  const insertUserFormHandler = (
+    _event: React.MouseEvent<HTMLButtonElement>,
+    data: { email: string; password: string }
+  ) => {
+    formik.setFieldValue("emailId", data.email, false);
+    formik.setFieldValue("password", data.password, false);
   };
 
   const {
@@ -146,13 +150,55 @@ export default function LoginPage() {
                 <Separator />
                 <div className="flex items-center flex-col gap-4">
                   <p className="font-semibold">Demo account login credential</p>
-                  <div className="flex justify-between items-center w-full text-sm">
-                    <p>User</p>
-                    <p>johndoe@gmail.com</p>
-                    <p>123456</p>
-                    <Button size={"icon"} variant={"outline"} type="button" onClick={insertUserFormHandler}>
-                      <Copy className="w-4" />
-                    </Button>
+                  <div className="flex flex-col gap-2 w-full">
+                    <div className="flex justify-between items-center w-full text-sm">
+                      <p>User 1</p>
+                      <p>johndoe@gmail.com</p>
+                      <p>123456</p>
+                      <div>
+                        <TooltipProvider delayDuration={0}>
+                          <Tooltip>
+                            <TooltipTrigger type="button">
+                              <Button
+                                size={"icon"}
+                                variant={"outline"}
+                                type="button"
+                                onClick={(event) =>
+                                  insertUserFormHandler(event, { email: "johndoe@gmail.com", password: "123456" })
+                                }
+                              >
+                                <Copy className="w-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent align="center">Click to copy user 1 credential</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center w-full text-sm">
+                      <p>User 2</p>
+                      <p>janesmith@gmail.com</p>
+                      <p>123456</p>
+                      <div>
+                        <TooltipProvider delayDuration={0}>
+                          <Tooltip>
+                            <TooltipTrigger type="button">
+                              <Button
+                                size={"icon"}
+                                variant={"outline"}
+                                type="button"
+                                onClick={(event) =>
+                                  insertUserFormHandler(event, { email: "janesmith@gmail.com", password: "123456" })
+                                }
+                              >
+                                <Copy className="w-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent align="center">Click to copy user 2 credential</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardDescription>
