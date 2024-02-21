@@ -142,7 +142,7 @@ export default function Product(props: ProductProps) {
                     <Avatar className="w-full h-full rounded-xl">
                       <AvatarImage
                         src={image}
-                        className="object-cover w-full rounded-xl"
+                        className="object-contain w-full rounded-xl"
                         alt={props.product.name}
                         loading="lazy"
                       />
