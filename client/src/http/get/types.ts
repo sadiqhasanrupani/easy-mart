@@ -6,6 +6,7 @@ export type GetUserRes = {
     image: string | null;
     email: string;
     address: string;
+    phone: string;
   };
 };
 
@@ -66,10 +67,12 @@ export type GetCartCountRes = {
 
 export type Cart = {
   id: number;
+  prodId: number;
   prodName: string;
   prodImg: string[] | null;
   prodQty: number;
   prodPrice: string;
+  isCheck: boolean | null;
   prodTotalPrice: string;
 };
 

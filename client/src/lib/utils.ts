@@ -28,6 +28,20 @@ export function shortenString(str: string, maxLen: number) {
   if (str.length <= maxLen) {
     return str;
   } else {
-    return str.slice(0, maxLen - 1) + '...';
+    return str.slice(0, maxLen - 1) + "...";
   }
+}
+
+export function loadScript(src: string) {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
 }

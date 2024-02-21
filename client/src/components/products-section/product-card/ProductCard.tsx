@@ -31,7 +31,10 @@ export default function ProductCard(props: ProductCard) {
         <div className="flex flex-col h-full justify-between">
           <div className="flex flex-col gap-6 justify-center">
             <div className="flex items-center justify-center">
-              <Avatar className="w-full h-[15rem] rounded-xl border">
+              <Avatar
+                className="w-full h-[15rem] rounded-xl border cursor-pointer"
+                onClick={() => navigate(`product-details/${props.product.id}`)}
+              >
                 <AvatarImage src={image[0]} className="object-cover w-full" alt={props.product.name} loading="lazy" />
                 <AvatarFallback className="h-[15rem] rounded-none">Loading...</AvatarFallback>
               </Avatar>
