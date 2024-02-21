@@ -19,6 +19,7 @@ export async function getUser(req: Request, res: Response) {
         image: user.img,
         email: user.email,
         address: user.address,
+        phone: user.phoneNumber,
       })
       .from(user)
       .where(eq(user.id, userMiddleware.id as number));

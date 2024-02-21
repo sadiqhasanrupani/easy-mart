@@ -12,6 +12,7 @@ import authRouter from "./routes/auth";
 import productRouter from "./routes/product";
 import userRouter from "./routes/user";
 import cartRouter from "./routes/cart";
+import paymentRouter from "./routes/payment";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -29,6 +30,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/product", productRouter);
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/order", paymentRouter);
 
 app.listen(port, () => {
   console.log(`[server]: server is listening at http://localhost:${port}/`);

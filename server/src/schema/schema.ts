@@ -50,16 +50,20 @@ export const cart = mysqlTable("carts", {
 
 export const order = mysqlTable("orders", {
   id: int("id", { unsigned: true }).notNull().primaryKey().autoincrement(),
+  orderId: varchar("order_id", { length: 191 }).notNull().unique(),
   userId: int("user_id", { unsigned: true })
     .notNull()
     .references(() => user.id),
   orderDate: date("order_date", { mode: "string" }).notNull(),
   totalAmount: varchar("total_amount", { length: 191 }).notNull(),
+  amountDue: varchar("amount_due", { length: 191 }).notNull(),
+  currency: varchar("currency", { length: 191 }),
+  paymentCapture: varchar("payment_capture", { length: 50 }),
   createdAt: datetime("created_at", { mode: "string" }),
   updatedAt: datetime("updated_at", { mode: "string" }),
 });
 
-export const oderItem = mysqlTable("order_items", {
+export const orderItem = mysqlTable("order_items", {
   id: int("id", { unsigned: true }).notNull().primaryKey().autoincrement(),
   orderId: int("order_id", { unsigned: true })
     .notNull()
