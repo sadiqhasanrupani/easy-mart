@@ -9,4 +9,7 @@ SHOW CREATE TABLE `easy_mart_db`.product_categories;
 SHOW CREATE TABLE `easy_mart_db`.products;
 SHOW CREATE TABLE `easy_mart_db`.test_cases;
 
+#SELECT QUERIES
+SELECT * FROM `easy_mart_db`.users;
+
 DROP DATABASE `easy_mart_db`;
