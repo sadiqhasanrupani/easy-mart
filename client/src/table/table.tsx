@@ -1,21 +1,21 @@
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 
 //^ http request
-import { GetCartDataRes } from "@/http/get/types";
-import { getAllCartsHandler } from "@/http/get";
+import { GetCartDataRes } from '@/http/get/types';
+import { getAllCartsHandler } from '@/http/get';
 
 //^ redux action
-import { productActions } from "@/store/slice/product-slice";
+import { productActions } from '@/store/slice/product-slice';
 
 //^ ui
-import { columns } from "./column";
+import { columns } from './column';
 
 //^ components
-import DataTableSkeletonLoading from "@/components/ui-component/loading/skeleton-loading/data-table-skeleton-loading/DataTableSkeletonLoading";
-import { DataTable } from "./data-table";
-import ErrorAlert from "@/components/error-message";
+import DataTableSkeletonLoading from '@/components/ui-component/loading/skeleton-loading/data-table-skeleton-loading/DataTableSkeletonLoading';
+import { DataTable } from './data-table';
+import ErrorAlert from '@/components/error-message';
 
 export function CartTable() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export function CartTable() {
     error: cartsError,
     refetch: cartsRefetch,
   } = useQuery<GetCartDataRes, any>({
-    queryKey: ["get-all-shopping-carts"],
+    queryKey: ['get-all-shopping-carts'],
     queryFn: ({ signal }) => getAllCartsHandler({ signal }),
     gcTime: 0,
     staleTime: Infinity,
@@ -45,6 +45,8 @@ export function CartTable() {
 
       dispatch(productActions.addProdSubTotalHandler(sumOfPrices));
     }
+
+    // eslint-disable-next-line
   }, [cartsData, cartsIsLoading]);
 
   return (
@@ -55,7 +57,7 @@ export function CartTable() {
           subTitle={`Message: ${
             cartsError?.info?.error?.message
               ? cartsError?.info?.error?.message
-              : (cartsError?.info && cartsError?.info?.message) || "Something went wrong"
+              : (cartsError?.info && cartsError?.info?.message) || 'Something went wrong'
           }`}
           onConformed={() => {
             cartsRefetch();

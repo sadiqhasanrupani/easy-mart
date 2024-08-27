@@ -1,31 +1,31 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { toast } from "sonner";
-import { AppUseSelector } from "@/store";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2"
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Cross2Icon } from '@radix-ui/react-icons';
+import { toast } from 'sonner';
+import { AppUseSelector } from '@/store';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 //^ redux action
-import { productActions } from "@/store/slice/product-slice";
+import { productActions } from '@/store/slice/product-slice';
 
 //^ http request
-import { getAllCartsHandler, getUserHandler } from "@/http/get";
-import { GetCartDataRes, GetUserRes } from "@/http/get/types";
-import { PlaceOrderContext, Product } from "@/http/post/types";
-import { postCheckoutHandler } from "@/http/post";
-import { queryClient } from "@/http";
+import { getAllCartsHandler, getUserHandler } from '@/http/get';
+import { GetCartDataRes, GetUserRes } from '@/http/get/types';
+import { PlaceOrderContext, Product } from '@/http/post/types';
+import { postCheckoutHandler } from '@/http/post';
+import { queryClient } from '@/http';
 
 //^ shadcn-ui
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 //^ components
-import ErrorAlert from "@/components/error-message";
-import Spinner from "@/components/ui-component/spinner/Spinner";
+import ErrorAlert from '@/components/error-message';
+import Spinner from '@/components/ui-component/spinner/Spinner';
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export default function CheckoutPage() {
     error: cartsError,
     refetch: cartsRefetch,
   } = useQuery<GetCartDataRes, any>({
-    queryKey: ["get-all-shopping-carts"],
+    queryKey: ['get-all-shopping-carts'],
     queryFn: ({ signal }) => getAllCartsHandler({ signal }),
     gcTime: 0,
     staleTime: Infinity,
@@ -67,7 +67,7 @@ export default function CheckoutPage() {
     error: getUserError,
     refetch: getUserRefetch,
   } = useQuery<GetUserRes, any>({
-    queryKey: ["get-user"],
+    queryKey: ['get-user'],
     queryFn: ({ signal }) => getUserHandler({ signal }),
     gcTime: 0,
     staleTime: Infinity,
@@ -80,24 +80,29 @@ export default function CheckoutPage() {
     mutate: checkoutMutate,
     reset: checkoutReset,
   } = useMutation<any, any, PlaceOrderContext>({
-    mutationKey: ["checkout-order"],
+    mutationKey: ['checkout-order'],
     mutationFn: postCheckoutHandler,
     onSuccess: (data) => {
       // toast.success(200, { description: data.message });
       Swal.fire({
-        title: "Order Placed Successfully",
+        title: 'Order Placed Successfully',
         text: data.message,
-        icon: "success"
+        icon: 'success',
       });
-      queryClient.invalidateQueries(["get-cart-count"] as any);
-      navigate("/");
+      queryClient.invalidateQueries({
+        queryKey: ['get-cart-count'],
+        exact: true,
+        type: 'active',
+      });
+
+      navigate('/');
     },
   });
 
   const checkoutOrderHandler = () => {
     const data: PlaceOrderContext = {
       amount: productTotalPrice,
-      currency: "INR",
+      currency: 'INR',
       orderDate: new Date(),
       products: cartsData?.carts.map((cart) => ({
         id: cart.prodId,
@@ -117,7 +122,7 @@ export default function CheckoutPage() {
           subTitle={`Message: ${
             checkoutError?.info?.error?.message
               ? checkoutError?.info?.error?.message
-              : (checkoutError?.info && checkoutError?.info?.message) || "Something went wrong"
+              : (checkoutError?.info && checkoutError?.info?.message) || 'Something went wrong'
           }`}
           onConformed={() => {
             checkoutReset();
@@ -131,7 +136,7 @@ export default function CheckoutPage() {
           subTitle={`Message: ${
             cartsError?.info?.error?.message
               ? cartsError?.info?.error?.message
-              : (cartsError?.info && cartsError?.info?.message) || "Something went wrong"
+              : (cartsError?.info && cartsError?.info?.message) || 'Something went wrong'
           }`}
           onConformed={() => {
             getUserRefetch();
@@ -145,7 +150,7 @@ export default function CheckoutPage() {
           subTitle={`Message: ${
             getUserError?.info?.error?.message
               ? getUserError?.info?.error?.message
-              : (getUserError?.info && getUserError?.info?.message) || "Something went wrong"
+              : (getUserError?.info && getUserError?.info?.message) || 'Something went wrong'
           }`}
           onConformed={() => {
             cartsRefetch();
@@ -236,9 +241,9 @@ export default function CheckoutPage() {
                           </div>
                         </div>
                       </div>
-                      <Button size={"lg"} type="button" onClick={checkoutOrderHandler}>
+                      <Button size={'lg'} type="button" onClick={checkoutOrderHandler}>
                         <span>Checkout</span>
-                        {checkoutIsPending ? <Spinner /> : ""}
+                        {checkoutIsPending ? <Spinner /> : ''}
                       </Button>
                     </div>
                   </>
@@ -247,7 +252,7 @@ export default function CheckoutPage() {
             </CardContent>
             <div
               className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground cursor-pointer"
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
             >
               <Cross2Icon className="h-5 w-5" />
               <span className="sr-only">Close</span>

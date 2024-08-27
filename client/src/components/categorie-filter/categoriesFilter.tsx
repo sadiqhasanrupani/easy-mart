@@ -1,19 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 
 //^ http request
-import { getProductCategoriesHandler } from "@/http/get";
-import { GetProductCategoriesRes } from "@/http/get/types";
+import { getProductCategoriesHandler } from '@/http/get';
+import { GetProductCategoriesRes } from '@/http/get/types';
 
 //^ redux actions
-import { productActions } from "@/store/slice/product-slice";
+import { productActions } from '@/store/slice/product-slice';
 
 //^ component
-import ErrorAlert from "../error-message";
-import DropDown, { Options } from "../ui-component/dropdown/DropDown";
+import ErrorAlert from '../error-message';
+import DropDown, { Options } from '../ui-component/dropdown/DropDown';
 
-export default function CategoriesFilter() {
+type CategoryFilterProps = React.HTMLAttributes<HTMLDivElement>;
+
+export default function CategoriesFilter(props: CategoryFilterProps) {
   const [prodCategoriesOpt, setProdCategoriesOpt] = useState<Options>();
   const [prodCategoryValue, setProdCategoryValue] = useState<number | null>();
 
@@ -28,7 +30,7 @@ export default function CategoriesFilter() {
     error: productCategoriesError,
     refetch: productCategoriesRefetch,
   } = useQuery<GetProductCategoriesRes, any>({
-    queryKey: ["get-product-categories"],
+    queryKey: ['get-product-categories'],
     queryFn: ({ signal }) => getProductCategoriesHandler({ signal }),
     gcTime: 0,
     staleTime: Infinity,
@@ -39,7 +41,7 @@ export default function CategoriesFilter() {
         label: prodCategory.name,
         value: prodCategory.id,
       }));
-      productCategoriesOptions?.push({ label: "All", value: 0 });
+      productCategoriesOptions?.push({ label: 'All', value: 0 });
 
       setProdCategoriesOpt(productCategoriesOptions);
     }
@@ -47,7 +49,7 @@ export default function CategoriesFilter() {
 
   const handleCategoriesDropDown = useCallback(
     (value?: string | number) => {
-      if (typeof value === "number") {
+      if (typeof value === 'number') {
         if (!productCategoriesIsLoading) {
           if (value !== 0) {
             dispatch(productActions.addProdCategoryId(value));
@@ -59,7 +61,7 @@ export default function CategoriesFilter() {
         }
       }
     },
-    [prodCategoryValue, productCategoriesIsLoading]
+    [prodCategoryValue, productCategoriesIsLoading],
   );
 
   return (
@@ -70,7 +72,7 @@ export default function CategoriesFilter() {
           subTitle={`Message: ${
             productCategoriesError?.info?.error?.message
               ? productCategoriesError?.info?.error?.message
-              : (productCategoriesError?.info && productCategoriesError?.info?.message) || "Something went wrong"
+              : (productCategoriesError?.info && productCategoriesError?.info?.message) || 'Something went wrong'
           }`}
           onConformed={() => {
             productCategoriesRefetch();
@@ -78,7 +80,7 @@ export default function CategoriesFilter() {
           clg={productCategoriesError?.info}
         />
       )}
-      <div>
+      <div {...props}>
         <DropDown
           onDropDown={handleCategoriesDropDown}
           value={prodCategoryValue as number}

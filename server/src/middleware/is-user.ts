@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 //^ db config
-import db from "../config/db.config";
+import { db } from "../config/db.config";
 
 // model
 import { user } from "../schema/schema";

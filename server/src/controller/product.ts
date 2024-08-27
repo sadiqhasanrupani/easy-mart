@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { asc, eq } from "drizzle-orm";
 
 //^ db and schemas
-import db from "../config/db.config";
+import { db } from "../config/db.config";
 import { product, productCategory } from "../schema/schema";
 
 export async function getAllProductsHandler(req: Request, res: Response) {

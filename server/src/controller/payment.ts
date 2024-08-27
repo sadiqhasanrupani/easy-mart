@@ -6,7 +6,7 @@ import Razorpay from "razorpay";
 import { User } from "../middleware/is-user";
 
 //^ db and schemas
-import db from "../config/db.config";
+import { db } from "../config/db.config";
 import { cart, order, orderItem } from "../schema/schema";
 
 //^ types
@@ -33,7 +33,7 @@ export async function postPlaceOrderHandler(req: Request, res: Response) {
       updatedAt: moment().format("YYYY-MM-DD HH:mm:ss"),
     });
 
-    if (insertOrder[0].affectedRows === 0) {
+    if (insertOrder.rowCount === 0) {
       return res.status(400).json({ message: "Unable to insert the order" });
     }
 
@@ -55,17 +55,17 @@ export async function postPlaceOrderHandler(req: Request, res: Response) {
           createdAt: currentDate,
           updatedAt: currentDate,
         };
-      })
+      }),
     );
 
-    if (insertOrderItems[0].affectedRows === 0) {
+    if (insertOrderItems.rowCount === 0) {
       return res.status(400).json({ message: "Unable to insert the order items" });
     }
 
     //^ now will empty the cart
     const removeCarts = await db.delete(cart).where(eq(cart.userId, user.id as number));
 
-    if (removeCarts[0].affectedRows === 0) {
+    if (removeCarts.rowCount === 0) {
       return res.status(400).json({ message: "Unable to remove the cart." });
     }
 

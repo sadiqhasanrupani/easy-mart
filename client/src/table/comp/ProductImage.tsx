@@ -12,7 +12,7 @@ export default function ProductImage(props: ProductImage) {
 
   return (
     <Avatar className="w-[20rem] h-[15rem] rounded-xl cursor-pointer" onClick={() => navigate(`/product-details/${props.prodId}`)}>
-      <AvatarImage src={props.image} className="object-cover w-[20rem]" alt={props.prodName} loading="lazy" />
+      <AvatarImage src={props.image} className="object-contain w-[20rem]" alt={props.prodName} loading="lazy" />
       <AvatarFallback className="h-[15rem] rounded-none">Loading...</AvatarFallback>
     </Avatar>
   );

@@ -1,7 +1,7 @@
 import moment from "moment";
 
 //^ db and schemas
-import db from "../config/db.config";
+import { db } from "../config/db.config";
 import { product, productCategory, user } from "../schema/schema";
 
 export async function insertDummyData() {
@@ -33,7 +33,7 @@ export async function insertDummyData() {
         },
       ]);
 
-      if (insertUserData[0].affectedRows === 0) {
+      if (insertUserData.rowCount === 0) {
         throw new Error("Unable to insert a user data.");
       }
     }
@@ -92,7 +92,7 @@ export async function insertDummyData() {
         },
       ]);
 
-      if (insertProductCategory[0].affectedRows === 0) {
+      if (insertProductCategory.rowCount === 0) {
         throw new Error("Unable to insert a product category data.");
       }
     }
@@ -567,7 +567,7 @@ export async function insertDummyData() {
         },
       ]);
 
-      if (insertProducts[0].affectedRows === 0) {
+      if (insertProducts.rowCount === 0) {
         throw new Error("Unable to insert any products.");
       }
     }

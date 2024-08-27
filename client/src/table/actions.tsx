@@ -1,17 +1,17 @@
-import { useEffect } from "react";
-import { Trash2 } from "lucide-react";
-import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import Swal from "sweetalert2";
+import { useEffect } from 'react';
+import { Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { useMutation } from '@tanstack/react-query';
+import { DotsHorizontalIcon } from '@radix-ui/react-icons';
+import Swal from 'sweetalert2';
 
 //^ http request
-import { deleteCartHandler } from "@/http/delete";
-import { DeleteCartContext } from "@/http/delete/types";
-import { queryClient } from "@/http";
+import { deleteCartHandler } from '@/http/delete';
+import { DeleteCartContext } from '@/http/delete/types';
+import { queryClient } from '@/http';
 
 //^ shadcn-ui
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,10 +19,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 //^ ui-component
-import ErrorAlert from "@/components/error-message";
+import ErrorAlert from '@/components/error-message';
 
 type ActionsProps = {
   id: number;
@@ -36,13 +36,18 @@ export default function Actions(props: ActionsProps) {
     mutate: deleteCartMutate,
     reset: deleteCartReset,
   } = useMutation<any, any, DeleteCartContext>({
-    mutationKey: ["delete-cart"],
+    mutationKey: ['delete-cart'],
     mutationFn: deleteCartHandler,
     onSuccess: (data) => {
-      toast.success("200", { description: data.message });
+      toast.success('200', { description: data.message });
       deleteCartReset();
-      queryClient.invalidateQueries(["get-cart-count"] as any);
-      queryClient.invalidateQueries(["get-all-shopping-carts"] as any);
+      queryClient.invalidateQueries({
+        queryKey: ['get-cart-count'],
+        exact: true,
+        type: 'active',
+      });
+
+      queryClient.invalidateQueries(['get-all-shopping-carts'] as any);
     },
     onSettled: () => {
       Swal.close();
@@ -79,7 +84,7 @@ export default function Actions(props: ActionsProps) {
             subTitle={`Message: ${
               deleteCartError?.info?.error?.message
                 ? deleteCartError?.info?.error?.message
-                : (deleteCartError?.info && deleteCartError?.info?.message) || "Something went wrong"
+                : (deleteCartError?.info && deleteCartError?.info?.message) || 'Something went wrong'
             }`}
             onConformed={() => {
               deleteCartReset();

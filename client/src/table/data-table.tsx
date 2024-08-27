@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import React, { useEffect, useState } from 'react';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -11,21 +11,21 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
-import { queryClient } from "@/http";
-import { Cart } from "@/http/get/types";
+import { queryClient } from '@/http';
+import { Cart } from '@/http/get/types';
 
 //^ shadcn-ui
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Select,
   SelectContent,
@@ -34,7 +34,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,7 +42,7 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({ columns, data: cartsData }: DataTableProps<TData, TValue>) {
-  const [pageNo, setPageNo] = useState<string>("5");
+  const [pageNo, setPageNo] = useState<string>('5');
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -70,6 +70,8 @@ export function DataTable<TData, TValue>({ columns, data: cartsData }: DataTable
 
   useEffect(() => {
     table.setPageSize(parseInt(pageNo));
+
+    // eslint-disable-next-line
   }, [pageNo]);
 
   return (
@@ -78,11 +80,20 @@ export function DataTable<TData, TValue>({ columns, data: cartsData }: DataTable
         <div className="flex gap-4">
           <Input
             placeholder="Search for product name..."
-            value={(table.getColumn("prodName")?.getFilterValue() as string) ?? ""}
-            onChange={(event) => table.getColumn("prodName")?.setFilterValue(event.target.value)}
+            value={(table.getColumn('prodName')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn('prodName')?.setFilterValue(event.target.value)}
             className="max-w-sm"
           />
-          <Button variant={"outline"} onClick={() => queryClient.invalidateQueries([""] as any)}>
+          <Button
+            variant={'outline'}
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['get-all-shopping-carts'],
+                exact: true,
+                type: 'active',
+              })
+            }
+          >
             Refresh
           </Button>
         </div>
@@ -121,7 +132,7 @@ export function DataTable<TData, TValue>({ columns, data: cartsData }: DataTable
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className={`${header.getContext().column.id === "prodImg" ? "w-[23rem]" : ""}`}
+                      className={`${header.getContext().column.id === 'prodImg' ? 'w-[23rem]' : ''}`}
                       key={header.id}
                     >
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
@@ -134,9 +145,11 @@ export function DataTable<TData, TValue>({ columns, data: cartsData }: DataTable
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="align-top" key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                    <TableCell className="align-top" key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))
@@ -164,13 +177,13 @@ export function DataTable<TData, TValue>({ columns, data: cartsData }: DataTable
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Select page size</SelectLabel>
-                  <SelectItem value={"2"}>2</SelectItem>
-                  <SelectItem value={"5"}>5</SelectItem>
-                  <SelectItem value={"10"}>10</SelectItem>
-                  <SelectItem value={"20"}>20</SelectItem>
-                  <SelectItem value={"30"}>30</SelectItem>
-                  <SelectItem value={"40"}>40</SelectItem>
-                  <SelectItem value={"100"}>100</SelectItem>
+                  <SelectItem value={'2'}>2</SelectItem>
+                  <SelectItem value={'5'}>5</SelectItem>
+                  <SelectItem value={'10'}>10</SelectItem>
+                  <SelectItem value={'20'}>20</SelectItem>
+                  <SelectItem value={'30'}>30</SelectItem>
+                  <SelectItem value={'40'}>40</SelectItem>
+                  <SelectItem value={'100'}>100</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

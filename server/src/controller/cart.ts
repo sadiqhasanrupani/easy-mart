@@ -6,7 +6,7 @@ import moment from "moment";
 import { User } from "../middleware/is-user";
 
 //^ db and schemas
-import db from "../config/db.config";
+import { db } from "../config/db.config";
 import { cart, product } from "../schema/schema";
 
 //^ types
@@ -109,7 +109,7 @@ export async function addToCartHandler(req: Request, res: Response) {
       updatedAt: moment().format("YYYY-MM-DD HH:mm:ss"),
     });
 
-    if (insertCart[0].affectedRows === 0) {
+    if (insertCart.rowCount === 0) {
       return res.status(400).json({ message: "Unable to insert the cart." });
     }
 
@@ -151,7 +151,7 @@ export async function updateAddToCartHandler(req: Request, res: Response) {
       })
       .where(and(eq(cart.userId, user.id as number), eq(cart.id, body.cartId)));
 
-    if (updateCart[0].affectedRows === 0) {
+    if (updateCart.rowCount === 0) {
       return res
         .status(400)
         .json({ message: "Unable to update the cart, This may due to invalid fields or invalid ids." });
@@ -179,7 +179,7 @@ export async function deleteCartHandler(req: Request, res: Response) {
     //^ deleting the cart
     const deleteCart = await db.delete(cart).where(eq(cart.id, cartId));
 
-    if (deleteCart[0].affectedRows === 0) {
+    if (deleteCart.rowCount === 0) {
       return res.status(400).json({ message: "Unable to delete the cart." });
     }
 

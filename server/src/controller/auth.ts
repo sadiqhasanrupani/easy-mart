@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import { PostLoginBody } from "../types/controller/auth";
 
 //^ db and schemas
-import db from "../config/db.config";
+import { db } from "../config/db.config";
 import { user } from "../schema/schema";
 
 export async function verifyUserHandler(_req: Request, res: Response) {

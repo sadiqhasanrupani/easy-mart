@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { User } from "../middleware/is-user";
 
 //^ db and schemas
-import db from "../config/db.config";
+import { db } from "../config/db.config";
 import { user } from "../schema/schema";
 
 export async function getUser(req: Request, res: Response) {
