@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { toast } from 'sonner';
 import { AppUseSelector } from '@/store';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
